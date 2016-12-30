@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Quotes</string>
+    <string name="share">Share</string>
+    <string name="icon_share">&#xf064;</string>
+    <string name="next">Next</string>
+    <string name="anon">Anonymous</string>
+    <string name="connectionError">Unable to connect to internet</string>
+    <string name="noInternet">Error occured while connecting to the internet</string>
+    <string name="retry">Retry</string>
+</resources>
