@@ -8,4 +8,7 @@
     <string name="noInternet">Error occured while connecting to the internet</string>
     <string name="retry">Retry</string>
     <string name="share_via">Share via...</string>
+    <string name="viewfavs">View Favourites</string>
+    <string name="quoteDeleted">Quote removed</string>
+    <string name="undo">Undo</string>
 </resources>

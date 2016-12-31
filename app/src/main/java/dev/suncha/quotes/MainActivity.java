@@ -1,12 +1,16 @@
 package dev.suncha.quotes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -106,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
         likeButton.setEventListener(new SparkEventListener() {
             @Override
             public void onEvent(ImageView button, boolean buttonState) {
-                if(buttonState){
+                if (buttonState) {
                     //button is selected, write to database
                     saveQuote();
-                }else{
+                } else {
                     //button is deselected, remove from database
                 }
             }
@@ -117,13 +121,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveQuote() {
-        QuoteModel newQuote = new QuoteModel(quotation,authorName);
+        QuoteModel newQuote = new QuoteModel(String.valueOf(quoteTV.getText().toString()), String.valueOf(authorTV.getText().toString()) );
         newQuote.save();
 
     }
 
     private void setFont() {
-        Typeface myFont = Typeface.createFromAsset(getAssets(),"fonts/CaviarDreams.ttf");
+        Typeface myFont = Typeface.createFromAsset(getAssets(), "fonts/CaviarDreams.ttf");
         quoteTV.setTypeface(myFont);
         authorTV.setTypeface(myFont);
 
@@ -198,5 +202,29 @@ public class MainActivity extends AppCompatActivity {
         super.onAttachedToWindow();
         Window window = getWindow();
         window.setFormat(PixelFormat.RGBA_8888);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.viewFavourites:
+                showFavouriteQuotes();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    private void showFavouriteQuotes() {
+        Intent favouriteQuotes = new Intent(this,ViewFavouritesActivity.class);
+        startActivity(favouriteQuotes);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.fav_menu, menu);
+        return true;
     }
 }
