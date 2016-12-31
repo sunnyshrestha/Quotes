@@ -6,6 +6,6 @@
     <dimen name="layout_margin">24dp</dimen>
     <dimen name="padding_left_right">12dp</dimen>
 
-    <dimen name="quote_font_size">24sp</dimen>
+    <dimen name="quote_font_size">20sp</dimen>
     <dimen name="author_font_size">16sp</dimen>
 </resources>

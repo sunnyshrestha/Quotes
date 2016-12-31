@@ -2,6 +2,7 @@ package dev.suncha.quotes;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -9,10 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.varunest.sparkbutton.SparkButton;
+import com.varunest.sparkbutton.SparkEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setFont();
+
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +94,44 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareQuote();
+            }
+        });
+
+        likeButton.setEventListener(new SparkEventListener() {
+            @Override
+            public void onEvent(ImageView button, boolean buttonState) {
+                if(buttonState){
+                    //button is selected, write to database
+                    saveQuote();
+                }else{
+                    //button is deselected, remove from database
+                }
+            }
+        });
+    }
+
+    private void saveQuote() {
+        QuoteModel newQuote = new QuoteModel(quotation,authorName);
+        newQuote.save();
+
+    }
+
+    private void setFont() {
+        Typeface myFont = Typeface.createFromAsset(getAssets(),"fonts/CaviarDreams.ttf");
+        quoteTV.setTypeface(myFont);
+        authorTV.setTypeface(myFont);
+
+    }
+
+
+    private void shareQuote() {
+
     }
 
     public static boolean isInternetOn(Context context) {

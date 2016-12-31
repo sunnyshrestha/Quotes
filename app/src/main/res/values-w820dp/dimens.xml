@@ -5,7 +5,7 @@
     <dimen name="activity_horizontal_margin">64dp</dimen>
     <dimen name="layout_margin">96dp</dimen>
 
-    <dimen name="quote_font_size">48sp</dimen>
+    <dimen name="quote_font_size">34sp</dimen>
     <dimen name="author_font_size">24sp</dimen>
     <dimen name="padding_left_right">12dp</dimen>
 </resources>
