@@ -49,6 +49,24 @@ public class MainActivity extends AppCompatActivity {
     String quotation;
     String authorName;
 
+    public static boolean isInternetOn(Context context) {
+        int[] networkTypes = {ConnectivityManager.TYPE_MOBILE,
+                ConnectivityManager.TYPE_WIFI};
+        try {
+            ConnectivityManager connectivityManager =
+                    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            for (int networkType : networkTypes) {
+                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                if (activeNetworkInfo != null &&
+                        activeNetworkInfo.getType() == networkType)
+                    return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
                     noInternetLayout.setVisibility(View.VISIBLE);
                     quoteAndAuthor.setVisibility(View.GONE);
                     buttonHolder.setVisibility(View.GONE);
+                }
+                if (likeButton.isChecked()) {
+                    likeButton.setChecked(false);
                 }
 
             }
@@ -133,29 +154,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     private void shareQuote() {
 
     }
-
-    public static boolean isInternetOn(Context context) {
-        int[] networkTypes = {ConnectivityManager.TYPE_MOBILE,
-                ConnectivityManager.TYPE_WIFI};
-        try {
-            ConnectivityManager connectivityManager =
-                    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            for (int networkType : networkTypes) {
-                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-                if (activeNetworkInfo != null &&
-                        activeNetworkInfo.getType() == networkType)
-                    return true;
-            }
-        } catch (Exception e) {
-            return false;
-        }
-        return false;
-    }
-
 
     private void setQuotes() {
 

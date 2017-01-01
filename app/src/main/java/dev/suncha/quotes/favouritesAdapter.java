@@ -25,22 +25,29 @@ public class favouritesAdapter extends RecyclerView.Adapter<favouritesAdapter.fa
     }
 
     @Override
-    public favouritesAdapter.favouritesModelVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_favourites, parent, false);
+    public favouritesModelVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_favourite, parent, false);
         favouritesModelVH viewHolder = new favouritesModelVH(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(favouritesAdapter.favouritesModelVH holder, int position) {
+    public void onBindViewHolder(favouritesModelVH holder, int position) {
         holder.favQuote.setText(quoteModel.get(position).getQuotation());
         holder.favAuthor.setText(quoteModel.get(position).getAuthor());
-
     }
 
     @Override
     public int getItemCount() {
         return quoteModel.size();
+    }
+
+    public void SetOnItemClickListener(final AdapterView.OnItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemCLick(View view, int position);
     }
 
     class favouritesModelVH extends RecyclerView.ViewHolder implements View.OnClickListener {

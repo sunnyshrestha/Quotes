@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/row_quote"
+        android:paddingBottom="@dimen/padding_left_right"
         android:paddingTop="@dimen/padding_left_right"
         android:textSize="@dimen/small" />
 

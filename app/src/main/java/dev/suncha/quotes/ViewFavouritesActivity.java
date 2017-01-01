@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,34 +24,6 @@ public class ViewFavouritesActivity extends AppCompatActivity {
 
     @BindView(R.id.fav_recyclerview)
     RecyclerView favRecyclerview;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favourites);
-        ButterKnife.bind(this);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-        favRecyclerview.setLayoutManager(linearLayoutManager);
-
-        count = QuoteModel.count(QuoteModel.class);
-
-        if (count >= 0) {
-            quotes = QuoteModel.listAll(QuoteModel.class);
-            adapter = new favouritesAdapter(ViewFavouritesActivity.this, quotes);
-            favRecyclerview.setAdapter(adapter);
-
-            if (quotes.isEmpty()) {
-                Snackbar.make(favRecyclerview, "Nothing here", Snackbar.LENGTH_SHORT).show();
-            }
-
-        }
-
-        ItemTouchHelper helper = new ItemTouchHelper(simpleCallback);
-        helper.attachToRecyclerView(favRecyclerview);
-
-    }
-
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -77,4 +51,39 @@ public class ViewFavouritesActivity extends AppCompatActivity {
                     }).show();
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_favourites);
+        ButterKnife.bind(this);
+
+        favRecyclerview.addItemDecoration(new SimpleDividerItemDecoration(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        favRecyclerview.setLayoutManager(linearLayoutManager);
+
+        count = QuoteModel.count(QuoteModel.class);
+
+        if (count >= 0) {
+            quotes = QuoteModel.listAll(QuoteModel.class);
+            adapter = new favouritesAdapter(ViewFavouritesActivity.this, quotes);
+            favRecyclerview.setAdapter(adapter);
+
+            if (quotes.isEmpty()) {
+                Snackbar.make(favRecyclerview, "Nothing here", Snackbar.LENGTH_SHORT).show();
+            }
+
+        }
+
+        ItemTouchHelper helper = new ItemTouchHelper(simpleCallback);
+        helper.attachToRecyclerView(favRecyclerview);
+
+        adapter.SetOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 }
