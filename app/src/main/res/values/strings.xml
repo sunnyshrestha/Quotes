@@ -11,4 +11,6 @@
     <string name="viewfavs">View Favourites</string>
     <string name="quoteDeleted">Quote removed</string>
     <string name="undo">Undo</string>
+    <string name="saved">Saved to favourites</string>
+    <string name="removed">Removed from favourites</string>
 </resources>

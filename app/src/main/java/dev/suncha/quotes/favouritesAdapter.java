@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 public class favouritesAdapter extends RecyclerView.Adapter<favouritesAdapter.favouritesModelVH> {
     Context context;
     List<QuoteModel> quoteModel;
-    AdapterView.OnItemClickListener clickListener;
+    OnItemClickListener clickListener;
 
     public favouritesAdapter(Context context, List<QuoteModel> quoteModel) {
         this.context = context;
@@ -42,12 +41,12 @@ public class favouritesAdapter extends RecyclerView.Adapter<favouritesAdapter.fa
         return quoteModel.size();
     }
 
-    public void SetOnItemClickListener(final AdapterView.OnItemClickListener itemClickListener) {
+    public void SetOnItemClickListener(final OnItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
     }
 
     public interface OnItemClickListener {
-        void onItemCLick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     class favouritesModelVH extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -62,10 +61,7 @@ public class favouritesAdapter extends RecyclerView.Adapter<favouritesAdapter.fa
 
         @Override
         public void onClick(View view) {
-
+            clickListener.onItemClick(view, getAdapterPosition());
         }
-
     }
-
-
 }

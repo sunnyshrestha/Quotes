@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class ViewFavouritesActivity extends AppCompatActivity {
             quote.delete();
             count -= 1;
 
-            Snackbar.make(favRecyclerview, R.string.quoteDeleted, Snackbar.LENGTH_SHORT)
+            Snackbar.make(favRecyclerview, R.string.quoteDeleted, Snackbar.LENGTH_LONG)
                     .setAction(R.string.undo, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -60,6 +59,8 @@ public class ViewFavouritesActivity extends AppCompatActivity {
 
         favRecyclerview.addItemDecoration(new SimpleDividerItemDecoration(this));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         favRecyclerview.setLayoutManager(linearLayoutManager);
 
         count = QuoteModel.count(QuoteModel.class);
@@ -78,12 +79,12 @@ public class ViewFavouritesActivity extends AppCompatActivity {
         ItemTouchHelper helper = new ItemTouchHelper(simpleCallback);
         helper.attachToRecyclerView(favRecyclerview);
 
-        adapter.SetOnItemClickListener(new AdapterView.OnItemClickListener() {
+        adapter.SetOnItemClickListener(new favouritesAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getApplication(), "Clicked nigga", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
 }

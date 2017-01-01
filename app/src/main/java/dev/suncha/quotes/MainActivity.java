@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,9 +46,12 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout quoteAndAuthor;
     @BindView(R.id.buttonHolder)
     RelativeLayout buttonHolder;
+    @BindView(R.id.activity_main)
+    RelativeLayout mainActivityLayout;
 
     String quotation;
     String authorName;
+    long latestID;
 
     public static boolean isInternetOn(Context context) {
         int[] networkTypes = {ConnectivityManager.TYPE_MOBILE,
@@ -134,16 +138,22 @@ public class MainActivity extends AppCompatActivity {
                 if (buttonState) {
                     //button is selected, write to database
                     saveQuote();
+                    Snackbar.make(mainActivityLayout, R.string.saved, Snackbar.LENGTH_SHORT).show();
                 } else {
                     //button is deselected, remove from database
+                    QuoteModel quote = QuoteModel.findById(QuoteModel.class, latestID);
+                    quote.delete();
+                    latestID = -1;
+                    Snackbar.make(mainActivityLayout, R.string.removed, Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private void saveQuote() {
-        QuoteModel newQuote = new QuoteModel(String.valueOf(quoteTV.getText().toString()), String.valueOf(authorTV.getText().toString()) );
+        QuoteModel newQuote = new QuoteModel(String.valueOf(quoteTV.getText().toString()), String.valueOf(authorTV.getText().toString()));
         newQuote.save();
+        latestID = newQuote.save();
 
     }
 
@@ -218,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showFavouriteQuotes() {
-        Intent favouriteQuotes = new Intent(this,ViewFavouritesActivity.class);
+        Intent favouriteQuotes = new Intent(this, ViewFavouritesActivity.class);
         startActivity(favouriteQuotes);
     }
 
